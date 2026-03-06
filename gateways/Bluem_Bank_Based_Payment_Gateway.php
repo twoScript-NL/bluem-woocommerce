@@ -112,6 +112,9 @@ abstract class Bluem_Bank_Based_Payment_Gateway extends Bluem_Payment_Gateway {
 			if ( ! empty( $config->paymentsCarteBancaireBrandID ) ) {
 				$config->brandID = $config->paymentsCarteBancaireBrandID;
 			}
+			if ( ! empty( $config->paymentsBancontactBrandID ) ) {
+				$config->brandID = $config->paymentsBancontactBrandID;
+			}
 		}
 
 		return $config;

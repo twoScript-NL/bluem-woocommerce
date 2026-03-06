@@ -71,7 +71,8 @@ const BLUEM_TRANSACTION_REQUEST_TYPES = [
         'creditcard',
         'paypal',
         'sofort',
-        'cartebancaire'
+        'cartebancaire',
+        'bancontact'
 ];
 
 /**
@@ -571,7 +572,7 @@ function bluem_requests_view() {
         }
 
         var_dump( $current_category );
-        bluem_requests_view_with_filter( $filters, $current_category );
+        bluem_requests_view_with_filter( $filters, $current_category ?? '');
     }
 }
 
@@ -809,7 +810,7 @@ function bluem_update_request_by_id( $request_id ) {
             bluem_dialogs_render_prompt( $errormessage );
             exit;
         }
-    } elseif ( $request->type === 'ideal' || $request->type === 'creditcard' || $request->type === 'paypal' || $request->type === 'sofort' || $request->type === 'cartebancaire' ) {
+    } elseif ( $request->type === 'ideal' || $request->type === 'creditcard' || $request->type === 'paypal' || $request->type === 'sofort' || $request->type === 'cartebancaire' || $request->type === 'bancontact' ) {
         try {
             $response = $bluem->PaymentStatus( $request->transaction_id, $request->entrance_code );
 
