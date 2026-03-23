@@ -535,44 +535,51 @@ function bluem_plugin_activation() {
 }
 
 
-function bluem_requests_view() {
+function bluem_requests_view(): void
+{
     if ( isset( $_GET['request_id'] ) && $_GET['request_id'] !== "" ) {
         if ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "delete" ) {
             bluem_db_delete_request_by_id( sanitize_text_field( wp_unslash( $_GET['request_id'] ) ) );
             wp_redirect(
                     esc_url( admin_url( "admin.php?page=bluem-transactions" ) )
             );
-        } elseif ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "status-update" ) {
+            return;
+        }
+
+        if ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "status-update" ) {
             bluem_update_request_by_id( sanitize_text_field( wp_unslash( $_GET['request_id'] ) ) );
-
-            bluem_requests_view_request();
-        } else {
-            bluem_requests_view_request();
-        }
-    } else {
-        $filters         = [];
-        $enabled_modules = bluem_filter_request_types_enabled( BLUEM_TRANSACTION_REQUEST_TYPES );
-        if ( str_contains( $_GET['request_type'], ',' ) ) {
-            $multiple_filters = explode( ',', $_GET['request_type'] );
-            $filters          = array_intersect( $multiple_filters, BLUEM_TRANSACTION_REQUEST_TYPES );
-
-            // fallback to first enabled module if no valid filter found
-            if ( count( $filters ) === 0 ) {
-                $filters = $enabled_modules[0];
-            }
-
-            $current_category = $filters[0];
-        } else if ( isset( $_GET['request_type'] ) && in_array( $_GET['request_type'], BLUEM_TRANSACTION_REQUEST_TYPES, true ) ) {
-            $filters          = [ $_GET['request_type'] ];
-            $current_category = $_GET['request_type'];
-        } else {
-            $filters          = $enabled_modules[0];
-            $current_category = $enabled_modules[0];
         }
 
-        var_dump( $current_category );
-        bluem_requests_view_with_filter( $filters, $current_category );
+        bluem_requests_view_request();
+        return;
     }
+
+    $filters         = [];
+    $enabled_modules = bluem_filter_request_types_enabled( BLUEM_TRANSACTION_REQUEST_TYPES );
+    if ( str_contains( $_GET['request_type'], ',' ) ) {
+        $multiple_filters = explode(',', $_GET['request_type']);
+        $filters = array_intersect($multiple_filters, BLUEM_TRANSACTION_REQUEST_TYPES);
+
+        // fallback to first enabled module if no valid filter found
+        if (count($filters) === 0) {
+            $filters = $enabled_modules[0];
+        }
+    }
+
+
+    if (count($filters) > 0) {
+        $current_category = $filters[0] ?? '';
+    } else if ( isset( $_GET['request_type'] ) && in_array( $_GET['request_type'], BLUEM_TRANSACTION_REQUEST_TYPES, true ) ) {
+        $filters          = [ $_GET['request_type'] ];
+        $current_category = $_GET['request_type'] ?? '';
+    } else if(!empty($enabled_modules[0])) {
+        $filters          = $enabled_modules[0];
+        $current_category = $enabled_modules[0];
+    } else {
+        $current_category = '';
+    }
+
+    bluem_requests_view_with_filter( $filters, $current_category ?? '' );
 }
 
 function bluem_filter_request_types_enabled( array $types ): array {
