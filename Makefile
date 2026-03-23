@@ -178,6 +178,10 @@ clean-up:
 copy-to-docker:
 	make pre-deployment;
 	@echo "$(BLUE)Copying all from build to docker/plugins/bluem directory...$(NC)"
+	# create docker/plugins/bluem if it doesn't exist
+	if [ ! -d "./docker/plugins/bluem" ]; then \
+		mkdir -p "./docker/plugins/bluem"; \
+	fi
 	cp -r ./build/* ./docker/plugins/bluem/.
 
 
