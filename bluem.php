@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Bluem ePayments, eMandates & iDIN
+ * Plugin Name: Bluem ePayments, eMandates & iDIN for WordPress & WooCommerce
  * Version: 1.3.34
  * Plugin URI: https://bluem.nl/en/
  * Description: Bluem integration for WordPress and WooCommerce for Payments, eMandates, iDIN identity verification and much, much more
@@ -550,34 +550,34 @@ function bluem_requests_view(): void
             bluem_update_request_by_id( sanitize_text_field( wp_unslash( $_GET['request_id'] ) ) );
         }
 
-        bluem_requests_view_request();
+            bluem_requests_view_request();
         return;
-    }
-
-    $filters         = [];
-    $enabled_modules = bluem_filter_request_types_enabled( BLUEM_TRANSACTION_REQUEST_TYPES );
-    if ( str_contains( $_GET['request_type'], ',' ) ) {
-        $multiple_filters = explode(',', $_GET['request_type']);
-        $filters = array_intersect($multiple_filters, BLUEM_TRANSACTION_REQUEST_TYPES);
-
-        // fallback to first enabled module if no valid filter found
-        if (count($filters) === 0) {
-            $filters = $enabled_modules[0];
         }
+
+        $filters         = [];
+        $enabled_modules = bluem_filter_request_types_enabled( BLUEM_TRANSACTION_REQUEST_TYPES );
+        if ( str_contains( $_GET['request_type'], ',' ) ) {
+            $multiple_filters = explode( ',', $_GET['request_type'] );
+            $filters          = array_intersect( $multiple_filters, BLUEM_TRANSACTION_REQUEST_TYPES );
+
+            // fallback to first enabled module if no valid filter found
+            if ( count( $filters ) === 0 ) {
+                $filters = $enabled_modules[0];
+            }
     }
 
 
     if (count($filters) > 0) {
         $current_category = $filters[0] ?? '';
-    } else if ( isset( $_GET['request_type'] ) && in_array( $_GET['request_type'], BLUEM_TRANSACTION_REQUEST_TYPES, true ) ) {
-        $filters          = [ $_GET['request_type'] ];
+        } else if ( isset( $_GET['request_type'] ) && in_array( $_GET['request_type'], BLUEM_TRANSACTION_REQUEST_TYPES, true ) ) {
+            $filters          = [ $_GET['request_type'] ];
         $current_category = $_GET['request_type'] ?? '';
     } else if(!empty($enabled_modules[0])) {
-        $filters          = $enabled_modules[0];
-        $current_category = $enabled_modules[0];
+            $filters          = $enabled_modules[0];
+            $current_category = $enabled_modules[0];
     } else {
         $current_category = '';
-    }
+        }
 
     bluem_requests_view_with_filter( $filters, $current_category ?? '' );
 }
