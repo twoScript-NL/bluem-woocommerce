@@ -1,4 +1,4 @@
-=== Bluem ePayments, eMandates & iDIN ===
+=== Bluem ePayments, eMandates & iDIN for WordPress & WooCommerce===
 Contributors: bluempaymentservices
 Tags: Bluem,Payments,iDIN,iDEAL,eMandates
 Requires at least: 5.0
@@ -78,6 +78,7 @@ It is possible to programmatically block display and functionality on your site 
 
 == Changelog ==
 - 1.3.34: Fixed issue with Request viewing in admin interface
+- 1.3.33: Improved performance & user experience of transaction requests table
 - 1.3.32: Fixed payment callback status atomicity issue
 - 1.3.31: Ensure rewrite rules are registered on init
 - 1.3.30: Fixed eMandates return bug; improved error messages in UI
