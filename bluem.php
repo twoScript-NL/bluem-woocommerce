@@ -293,7 +293,7 @@ function bluem_woocommerce_no_woocommerce_notice() {
             /* translators: %s: the link to settings page   */
             printf( wp_kses_post( 'De Bluem integratie is grotendeels afhankelijk van WooCommerce - installeer en/of activeer deze plug-in. <br/>
             Gebruik je geen WooCommerce? Dan kan je deze melding en WooCommerce gerelateerde functionaliteiten uitzetten bij de %s.', 'bluem' ),
-                    '<a href="' . esc_url( admin_url( 'admin.php?page=)bluem-settings' ) ) . '">' . esc_html__( 'Instellingen', 'bluem' ) . '</a>' );
+                    '<a href="' . esc_url( admin_url( 'admin.php?page=bluem-settings' ) ) . '">' . esc_html__( 'Instellingen', 'bluem' ) . '</a>' );
             echo '</p>
             </div>';
         }
