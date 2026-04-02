@@ -105,3 +105,45 @@
         width: 70%;
     }
 }
+
+.woocommerce-checkout-payment .payment_method_bluem_payments_bancontact,
+.woocommerce-checkout-payment .payment_method_bluem_payments_ideal,
+.woocommerce-checkout-payment .payment_method_bluem_payments_paypal,
+.woocommerce-checkout-payment .payment_method_bluem_payments_creditcard
+{
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px 0 !important;
+    flex-wrap: wrap;
+}
+.woocommerce-checkout-payment .payment_method_bluem_payments_bancontact input,
+.woocommerce-checkout-payment .payment_method_bluem_payments_ideal input,
+.woocommerce-checkout-payment .payment_method_bluem_payments_paypal input,
+.woocommerce-checkout-payment .payment_method_bluem_payments_creditcard input
+{
+    flex: 0 0 auto;
+}
+.woocommerce-checkout-payment .payment_method_bluem_payments_bancontact label,
+.woocommerce-checkout-payment .payment_method_bluem_payments_ideal label,
+.woocommerce-checkout-payment .payment_method_bluem_payments_paypal label,
+.woocommerce-checkout-payment .payment_method_bluem_payments_creditcard label
+{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    flex: 0 0 75%;
+}
+.woocommerce-checkout-payment .payment_method_bluem_payments_bancontact label img,
+.woocommerce-checkout-payment .payment_method_bluem_payments_ideal label img,
+.woocommerce-checkout-payment .payment_method_bluem_payments_paypal label img,
+.woocommerce-checkout-payment .payment_method_bluem_payments_creditcard label img
+{
+    max-height: 32px;
+    width: auto;
+    margin-right: 10px !important;
+}
+.woocommerce-checkout-payment .payment_method_bluem_payments_ideal .payment_box.payment_method_bluem_payments_ideal{
+    margin-top: 25px !important;
+}

@@ -9,7 +9,9 @@ class Bluem_PayPal_Payment_Gateway extends Bluem_Bank_Based_Payment_Gateway
         parent::__construct(
             'bluem_payments_paypal',
             esc_html__('Bluem payments via PayPal', 'bluem'),
-            esc_html__('Pay easily, quickly and safely via PayPal', 'bluem')
+            esc_html__('Pay easily, quickly and safely via PayPal', 'bluem'),
+            null,
+            plugins_url('../assets/payment-methods/paypal.svg', __FILE__)
         );
 
         $options = get_option('bluem_woocommerce_options');

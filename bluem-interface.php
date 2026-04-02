@@ -583,6 +583,10 @@ function bluem_render_requests_type( $cat ): string {
         return esc_html__( 'Carte Bancaire', 'bluem' );
     }
 
+    if ( $cat === 'bancontact' ) {
+        return esc_html__( 'Bancontact', 'bluem' );
+    }
+
     if ( $cat === 'sofort' ) {
         return esc_html__( 'SOFORT', 'bluem' );
     }
@@ -615,6 +619,9 @@ function bluem_render_requests_table_title( $cat ): void {
     } elseif ( $cat === 'cartebancaire' ) {
         $result .= '<span class="dashicons dashicons-money-alt"></span>&nbsp; ';
         $result .= esc_html__( 'Carte Bancaire betalingen', 'bluem' );
+    } elseif ( $cat === 'bancontact' ) {
+        $result .= '<span class="dashicons dashicons-money-alt"></span>&nbsp; ';
+        $result .= esc_html__( 'Bancontact betalingen', 'bluem' );
     } elseif ( $cat === 'sofort' ) {
         $result .= '<span class="dashicons dashicons-money-alt"></span>&nbsp; ';
         $result .= esc_html__( 'SOFORT betalingen', 'bluem' );

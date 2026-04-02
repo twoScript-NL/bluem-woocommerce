@@ -15,6 +15,7 @@ function bluem_add_gateway_class_payments($gateways)
     $gateways[] = Bluem_Creditcard_Payment_Gateway::class;
     $gateways[] = Bluem_Sofort_Payment_Gateway::class;
     $gateways[] = Bluem_CarteBancaire_Payment_Gateway::class;
+    $gateways[] = Bluem_Bancontact_Payment_Gateway::class;
 
     return $gateways;
 }
@@ -34,6 +35,7 @@ function bluem_init_payment_gateway_class()
     include_once __DIR__ . '/gateways/Bluem_Creditcard_Payment_Gateway.php';
     include_once __DIR__ . '/gateways/Bluem_Sofort_Payment_Gateway.php';
     include_once __DIR__ . '/gateways/Bluem_CarteBancaire_Payment_Gateway.php';
+    include_once __DIR__ . '/gateways/Bluem_Bancontact_Payment_Gateway.php';
 }
 
 function bluem_woocommerce_payments_settings_section()
@@ -106,6 +108,13 @@ function bluem_woocommerce_get_payments_options()
             'description' => 'Het Bluem BrandID voor betalingen via Carte Bancaire Payments',
             'default' => '',
         ),
+        'paymentsBancontactBrandID' => array(
+            'key' => 'paymentsBancontactBrandID',
+            'title' => 'bluem_paymentsBancontactBrandID',
+            'name' => 'BrandID voor Bancontact',
+            'description' => 'Het Bluem BrandID voor betalingen via Bancontact Payments',
+            'default' => '',
+        ),
         'paymentCompleteRedirectType' => array(
             'key' => 'paymentCompleteRedirectType',
             'title' => 'bluem_paymentCompleteRedirectType',
@@ -161,6 +170,13 @@ function bluem_woocommerce_settings_render_paymentsCarteBancaireBrandID()
 {
     bluem_woocommerce_settings_render_input(
         bluem_woocommerce_get_payments_option('paymentsCarteBancaireBrandID')
+    );
+}
+
+function bluem_woocommerce_settings_render_paymentsBancontactBrandID()
+{
+    bluem_woocommerce_settings_render_input(
+        bluem_woocommerce_get_payments_option('paymentsBancontactBrandID')
     );
 }
 

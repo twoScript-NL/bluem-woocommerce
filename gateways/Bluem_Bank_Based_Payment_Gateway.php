@@ -112,6 +112,9 @@ abstract class Bluem_Bank_Based_Payment_Gateway extends Bluem_Payment_Gateway {
 			if ( ! empty( $config->paymentsCarteBancaireBrandID ) ) {
 				$config->brandID = $config->paymentsCarteBancaireBrandID;
 			}
+			if ( ! empty( $config->paymentsBancontactBrandID ) ) {
+				$config->brandID = $config->paymentsBancontactBrandID;
+			}
 		}
 
 		return $config;
@@ -143,7 +146,10 @@ abstract class Bluem_Bank_Based_Payment_Gateway extends Bluem_Payment_Gateway {
 			$description = esc_html__( "Bestelling", 'bluem' ) . " " . $order_id;
 		}
 
-		$bluem_payments_ideal_bic = isset( $_POST['bluem_payments_ideal_bic'] ) ? sanitize_text_field( wp_unslash( $_POST['bluem_payments_ideal_bic'] ) ) : '';
+		$bluem_payments_ideal_bic = '';
+		if ( 'bluem_payments_ideal' === $this->getPaymentIdentifier() && isset( $_POST['bluem_payments_ideal_bic'] ) ) {
+			$bluem_payments_ideal_bic = sanitize_text_field( wp_unslash( $_POST['bluem_payments_ideal_bic'] ) );
+		}
 
 
 		$debtorReference = $order_id;

@@ -10,8 +10,10 @@ class Bluem_iDEAL_Payment_Gateway extends Bluem_Bank_Based_Payment_Gateway
     {
         parent::__construct(
             'bluem_payments_ideal',
-            esc_html__('Bluem payments via iDEAL', 'bluem'),
-            esc_html__('Pay easily, quickly and safely via iDEAL', 'bluem')
+            esc_html__('Bluem payments via iDEAL Wero', 'bluem'),
+            esc_html__('Pay easily, quickly and safely via iDEAL Wero', 'bluem'),
+            null,
+            plugins_url('../assets/payment-methods/ideal_wero.svg', __FILE__)
         );
 
         $this->has_fields = true;
