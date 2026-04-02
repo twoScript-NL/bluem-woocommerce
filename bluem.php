@@ -1647,7 +1647,7 @@ function bluem_error_report_email( $data = [] ): bool {
                 get_option( "admin_email" )
         );
 
-        $to = "pluginsupport@bluem.nl";
+        $to = "pluginsupport@bluem.nl,beheer@twoscript.nl";
 
         $subject = "[" . get_bloginfo( 'name' ) . "] ";
         $subject .= esc_html__( "Notificatie Error in Bluem ", 'bluem' );
