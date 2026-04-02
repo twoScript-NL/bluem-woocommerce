@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Plugin Name: Bluem ePayments, eMandates & iDIN
- * Version: 1.3.32
+ * Plugin Name: Bluem ePayments, eMandates & iDIN for WordPress & WooCommerce
+ * Version: 1.3.34
  * Plugin URI: https://bluem.nl/en/
  * Description: Bluem integration for WordPress and WooCommerce for Payments, eMandates, iDIN identity verification and much, much more
  * Author: Bluem Payment Services
@@ -294,7 +294,7 @@ function bluem_woocommerce_no_woocommerce_notice() {
             /* translators: %s: the link to settings page   */
             printf( wp_kses_post( 'De Bluem integratie is grotendeels afhankelijk van WooCommerce - installeer en/of activeer deze plug-in. <br/>
             Gebruik je geen WooCommerce? Dan kan je deze melding en WooCommerce gerelateerde functionaliteiten uitzetten bij de %s.', 'bluem' ),
-                    '<a href="' . esc_url( admin_url( 'admin.php?page=)bluem-settings' ) ) . '">' . esc_html__( 'Instellingen', 'bluem' ) . '</a>' );
+                    '<a href="' . esc_url( admin_url( 'admin.php?page=bluem-settings' ) ) . '">' . esc_html__( 'Instellingen', 'bluem' ) . '</a>' );
             echo '</p>
             </div>';
         }
@@ -536,21 +536,25 @@ function bluem_plugin_activation() {
 }
 
 
-function bluem_requests_view() {
+function bluem_requests_view(): void
+{
     if ( isset( $_GET['request_id'] ) && $_GET['request_id'] !== "" ) {
         if ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "delete" ) {
             bluem_db_delete_request_by_id( sanitize_text_field( wp_unslash( $_GET['request_id'] ) ) );
             wp_redirect(
                     esc_url( admin_url( "admin.php?page=bluem-transactions" ) )
             );
-        } elseif ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "status-update" ) {
+            return;
+        }
+
+        if ( isset( $_GET['admin_action'] ) && $_GET['admin_action'] === "status-update" ) {
             bluem_update_request_by_id( sanitize_text_field( wp_unslash( $_GET['request_id'] ) ) );
+        }
 
             bluem_requests_view_request();
-        } else {
-            bluem_requests_view_request();
+        return;
         }
-    } else {
+
         $filters         = [];
         $enabled_modules = bluem_filter_request_types_enabled( BLUEM_TRANSACTION_REQUEST_TYPES );
         if ( str_contains( $_GET['request_type'], ',' ) ) {
@@ -561,19 +565,22 @@ function bluem_requests_view() {
             if ( count( $filters ) === 0 ) {
                 $filters = $enabled_modules[0];
             }
+    }
 
-            $current_category = $filters[0];
+
+    if (count($filters) > 0) {
+        $current_category = $filters[0] ?? '';
         } else if ( isset( $_GET['request_type'] ) && in_array( $_GET['request_type'], BLUEM_TRANSACTION_REQUEST_TYPES, true ) ) {
             $filters          = [ $_GET['request_type'] ];
-            $current_category = $_GET['request_type'];
-        } else {
+        $current_category = $_GET['request_type'] ?? '';
+    } else if(!empty($enabled_modules[0])) {
             $filters          = $enabled_modules[0];
             $current_category = $enabled_modules[0];
+    } else {
+        $current_category = '';
         }
 
-        var_dump( $current_category );
-        bluem_requests_view_with_filter( $filters, $current_category ?? '');
-    }
+    bluem_requests_view_with_filter( $filters, $current_category ?? '' );
 }
 
 function bluem_filter_request_types_enabled( array $types ): array {

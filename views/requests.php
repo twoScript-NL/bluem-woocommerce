@@ -2,7 +2,6 @@
     exit;
 }
 
-var_dump( 'kaasfondue', $current_category );
 ?>
 <div class="wrap">
     <h1>
